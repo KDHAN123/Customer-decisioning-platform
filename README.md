@@ -1,20 +1,21 @@
-# Customer Decisioning & Experimentation Platform
+# World Cup Streaming Decisioning Platform
 
-An end-to-end analytics and machine learning platform that evaluates whether an ML-based customer offer strategy can outperform an existing rule-based strategy in SaaS trial conversion and revenue.
+An end-to-end customer decisioning and experimentation platform that evaluates
+whether an ML-based subscription-offer strategy can outperform a rule-based
+strategy during a major streaming event such as the FIFA World Cup.
 
-## Planned architecture
+The platform generates synthetic users, match-viewing behavior, subscription
+activity, offer interactions, purchases, cancellations, and experiment outcomes.
 
-Synthetic customer and behavioral data  
-→ ClickHouse raw warehouse  
-→ dbt SQL transformations  
-→ Star-schema analytics layer  
-→ Customer feature tables  
-→ ML model training and MLflow  
-→ FastAPI decision service  
-→ A/B experiment simulation  
-→ Statistical analysis  
-→ Superset dashboard
 
-## Current status
+# Planned Architecture
 
-Project environment and warehouse foundation in progress.
+Synthetic users, matches, and streaming events
+→ ClickHouse raw event storage
+→ dbt transformations
+→ Customer feature table
+→ ML model training and MLflow
+→ FastAPI recommendation service
+→ Rule-based vs ML-based A/B experiment
+→ Subscription, revenue, cancellation, and retention analysis
+→ Experiment dashboard
