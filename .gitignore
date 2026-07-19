@@ -1,34 +1,26 @@
+# Generated source-system data
+data/raw/**/*.parquet
+data/raw/**/*.csv
+
+# Keep small samples for portfolio review
+!data/samples/*.csv
+
 # Python
 __pycache__/
 *.py[cod]
-*.egg-info/
-.pytest_cache/
+
+# Jupyter
 .ipynb_checkpoints/
 
-# Virtual environments
-.venv/
-venv/
-
-# Environment variables and secrets
-.env
-
-# Generated datasets
-data/raw/*
-data/processed/*
-!data/raw/.gitkeep
-!data/processed/.gitkeep
-
-# dbt generated files
+# dbt artifacts
 dbt/target/
 dbt/logs/
 dbt/dbt_packages/
 
-# MLflow
-mlruns/
-mlartifacts/
+# Environment files
+.env
+.venv/
+venv/
 
 # macOS
 .DS_Store
-
-# VS Code local settings
-.vscode/settings.json
