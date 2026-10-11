@@ -1,26 +1,11 @@
-# Generated source-system data
-data/raw/**/*.parquet
-data/raw/**/*.csv
-
-# Keep small samples for portfolio review
-!data/samples/*.csv
-
-# Python
+# All generated datasets and evaluation answer keys are local only.
+/data/
+/work/
 __pycache__/
 *.py[cod]
-
-# Jupyter
+.pytest_cache/
 .ipynb_checkpoints/
-
-# dbt artifacts
-dbt/target/
-dbt/logs/
-dbt/dbt_packages/
-
-# Environment files
-.env
 .venv/
 venv/
-
-# macOS
+.env
 .DS_Store
