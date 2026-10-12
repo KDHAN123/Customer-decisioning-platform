@@ -2,7 +2,7 @@
 
 The business question remains: **After the World Cup brings in free-trial customers, which action improves paid retention enough to be worth its cost?**
 
-The primary walkthrough is `notebooks/02_experiment_analysis.ipynb`. It regenerates the unchanged Milestone 1 simulator using 12,000 customers and seed 2026, saves its own exports under ignored `data/milestone2/`, and preserves Milestone 1's files. The simulator's assumptions remain in `docs/assumptions.md`. Statistical helpers in `retention/analysis.py` take observed outcomes only; no predictive model is fitted.
+The primary walkthrough is `notebooks/02_experiment_analysis.ipynb`. Run Notebook 1 to create the data, then Notebook 2 to analyze it. Notebook 1 uses 12,000 customers and seed 2026 by default and saves `data/generated/customers.csv`. Notebook 2 loads that exact CSV, restores its date columns, and saves only analysis results under ignored `data/milestone2/`. It never calls the simulator. Missing customer or answer-key files give a friendly instruction to run Notebook 1 first. The simulator's assumptions remain in `docs/assumptions.md`. Statistical helpers in `retention/analysis.py` take observed outcomes only; no predictive model is fitted.
 
 ## Population, assignment, and estimands
 
@@ -10,7 +10,7 @@ Eligible customers are uncanceled trial users who remain viewing-active shortly 
 
 The estimand is the average effect of **assignment** to each action versus control in the eligible population. The estimator is the offer mean minus the control mean. Every randomized customer stays in their assigned arm; nonconverters and churned customers remain in each denominator. There are no post-treatment exclusions, missing follow-up, noncompliance, or cross-customer interference in this simulator. Random assignment supports the causal interpretation within this invented world; it does not validate the synthetic assumptions or establish real-world effectiveness.
 
-Pre-offer count, mean, standard-deviation, and standardized mean-difference summaries are randomization diagnostics. They do not trigger rerandomization, exclusions, or searches for favorable subgroups. Baseline mean differences are scaled by the pooled within-group standard deviation. No baseline significance testing is used.
+Assignment counts and pre-offer means and standard deviations are randomization diagnostics. They do not trigger rerandomization, exclusions, or searches for favorable subgroups. No baseline significance testing is used.
 
 ## Primary family: two paid-retention comparisons
 
@@ -47,7 +47,7 @@ No optional peeking, hypothesis switching, subgroup searching, ML targeting, upl
 
 ## Final oracle diagnostic boundary
 
-During generation, the key is written separately and removed from memory without inspection. Observed inference and interpretation finish before the notebook loads `data/milestone2/evaluation_only/oracle_probabilities.csv`.
+Notebook 1 writes the answer key separately to `data/evaluation_only/oracle_probabilities.csv`. Notebook 2 does not read it during setup, data loading, or inference. Observed-data analysis and interpretation finish before the final, clearly labeled simulation check loads that file. The final diagnostic is saved under `data/milestone2/oracle_estimate_diagnostic.csv`; it does not replace the input key.
 
 The diagnostic averages each action's unconditional retention probability over **the same entire generated cohort**, then subtracts the cohort's control probability mean. It compares this planted expected effect with the observed difference and its adjusted interval. Conversion probabilities are checked likewise. Do not average only assigned-arm probabilities from different customer mixes or use conditional retention probabilities as the primary target. The key provides probabilities, not expected revenue amounts or realized counterfactual outcomes.
 
@@ -55,6 +55,10 @@ Observed estimates can differ from the key because of random assignment composit
 
 ## Validation and artifacts
 
-Run `python -m pytest -q`, execute the notebook top to bottom, and run `git diff --check`. Tests verify known risk differences, pooled-test calculations, adjusted interval widening and p-values, agreement with SciPy's independent Welch implementation, complete denominators including zero/negative revenue, failure on missing/duplicate/unknown/sparse data, and invariance to oracle columns and row ordering.
+Run `python -m pytest -q`, execute the notebook top to bottom, and run `git diff --check`. Tests also verify CSV round trips preserve dates, all customers, and statistical results; missing-file messages explain the notebook order. Statistical tests verify known risk differences, pooled-test calculations, adjusted interval widening and p-values, agreement with SciPy's independent Welch implementation, complete denominators including zero/negative revenue, failure on missing/duplicate/unknown/sparse data, and invariance to oracle columns and row ordering.
 
 Git stores notebook previews, aggregate result tables, and charts. Generated observed rows, oracle rows, run metadata, and CSV result tables stay under ignored `data/`; they are not added to Git.
+
+## Beginner walkthrough and optional details
+
+Both notebooks now begin each section with a plain-language question, explain code before execution, and show a small customer example. Notebook 2 displays group results before explaining them. The statistical methods above are unchanged; their names and formulas appear in a short optional appendix rather than interrupting the main walkthrough. Reporting helpers format adjusted results, while full-precision CSVs retain ordinary and adjusted intervals and all original test values.
