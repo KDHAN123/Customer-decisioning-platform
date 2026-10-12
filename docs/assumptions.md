@@ -81,3 +81,7 @@ Do not subtract total offer cost from subscription revenue: that would subtract 
 `data/evaluation_only/oracle_probabilities.csv` is a separate three-row-per-customer answer key: conversion probability, day-90 retention probability conditional on conversion, and unconditional retention probability (their product) for each possible action. It is **simulation ground truth for later method checks**, not a feature available to a real prediction model and not realized counterfactual outcomes. Latent preferences are not exported into the observed or feature datasets.
 
 The notebook briefly joins assigned-arm probabilities into an evaluation-only diagnostic table to check sampling calibration, then deletes that table. It never joins the oracle into customer feature data. Generated datasets and run metadata remain ignored by Git. Fixed seeds reproduce results within the same package versions; metadata records versions and the scenario identifier.
+
+## Analysis of this unchanged scenario
+
+Milestone 2 (`notebooks/02_experiment_analysis.ipynb`) analyzes these same generated outcomes without changing the simulator. Its tests, confidence intervals, and multiplicity plan are documented in `docs/experiment_analysis.md`. This document specifies Milestone 1 generation assumptions; Milestone 2 adds observed-data inference, followed by a separate final oracle method check.
